@@ -33,7 +33,7 @@ public class Task1_Part1_Solution {
         int parseDistance; // Used to get the integer part of the data
 
         for (String s : data) {
-            // Did we go Right or left?
+            // See if we go right or left?
             if (s.charAt(0) == 'R')
                 facingDirection += 5; // Rotate clockwise ( 1 + 4)
             else
@@ -72,7 +72,7 @@ public class Task1_Part1_Solution {
         visited.add(new Integer[]{coordinates[0], coordinates[1]});
 
         for (String s : data) {
-            // Did we go Right or left?
+            // See if we go right or left?
             if (s.charAt(0) == 'R')
                 facingDirection += 5; // Rotate clockwise ( 1 + 4)
             else
@@ -109,7 +109,7 @@ public class Task1_Part1_Solution {
      * @return Coordinate as int array
      */
     private static int[] getFirstCoordVisitedTwice(List<Integer[]> visited) {
-        Set<Coordinate> duplicateCheck = new HashSet<>(); // Cast to coordinate so we can use our own equals and hash method
+        Set<Coordinate> duplicateCheck = new HashSet<>();
         for (Integer[] coordinate : visited) {
             Coordinate temp = new Coordinate(coordinate[0], coordinate[1]);
             if (duplicateCheck.contains(temp)) {
@@ -170,9 +170,6 @@ public class Task1_Part1_Solution {
     }
 
     /**
-     * Simple method to convert the inputs from a String to an Array of Strings. Use parseDataFile if you want to pass
-     * inputs as a file
-     *
      * @param data String of data
      * @return parsed data
      */
@@ -181,17 +178,15 @@ public class Task1_Part1_Solution {
     }
 
     /**
-     * Simple method to just parse a txt file containing all your data for the challenge
-     *
-     * @param path - Path relative to the directory that contains your directions
-     * @return - An Array of Strings containing all your directions with commas and white space removed
+     * @param path - Path relative to the directory that contains directions
+     * @return - An Array of Strings containing all directions with commas and white space removed
      * @throws IOException Throw Exception to the top layer of logic
      */
     private static String[] parseDataFile(String path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(path)); // Simple bufferedReader to take in your data.
+        BufferedReader br = new BufferedReader(new FileReader(path));
         String data = br.readLine(); // Read the file and remove all whitespace.
         String[] parsedData = data.split(", "); // Split the string after all commas.
-        br.close(); // Ensure you close the BufferedReader.
+        br.close();
         return parsedData;
     }
 
