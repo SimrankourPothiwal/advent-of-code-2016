@@ -15,48 +15,12 @@ public class Task1_Part2_Solution {
     public static void main(String[] args) {
         try {
             String[] data = parseDataFile("src/input.txt");
-
             System.out.println(calculateDistanceOfVisitedTwice(data));
         } catch (IOException e) { // As File reader can fail
             e.printStackTrace();
         }
     }
 
-    /**
-     * Calculate distance traveled for a given Array of Strings
-     * @param data Array of Strings
-     * @return Travel distance
-     */
-    private static int calculateDistanceFromStart(String[] data) {
-        int facingDirection = 0; // Determines which direction you are facing. 0 = North, 1 = East, 2 = South , 3 = West
-        int[] coordinates = new int[] {0, 0}; // Starting position, always 0, 0
-        int parseDistance; // Used to get the integer part of the data
-
-        for (String s : data) {
-            // See if we go right or left?
-            if (s.charAt(0) == 'R')
-                facingDirection += 5; // Rotate clockwise ( 1 + 4)
-            else
-                facingDirection += 3; // Rotate anti-clockwise ( -1 + 4)
-
-            parseDistance = Integer.parseInt(s.substring(1)); // Get the distance part of the String
-            switch (facingDirection % 4) { // Mod positive number by 4 to get NESW value
-                case 0: // Case of North, move Y coord in positive direction
-                    coordinates[1] += parseDistance;
-                    break;
-                case 1: // Case of East, move X coord in positive direction
-                    coordinates[0] += parseDistance;
-                    break;
-                case 2: // Case of South, move Y coord in negative direction
-                    coordinates[1] -= parseDistance;
-                    break;
-                case 3: // Case of West, move X coord in negative direction
-                    coordinates[0] -= parseDistance;
-                    break;
-            }
-        }
-        return (abs(coordinates[0]) + abs(coordinates[1])); // Add total of X + Y (positive) to get distance traveled, since city grid system is 1, 1 movements all we need to do is total X Y
-    }
 
     /**
      * Calculate distance of first location visited twice for a given Array of Strings
@@ -73,7 +37,7 @@ public class Task1_Part2_Solution {
         visited.add(new Integer[]{coordinates[0], coordinates[1]});
 
         for (String s : data) {
-            // See if we go right or left?
+            // Did we go Right or left?
             if (s.charAt(0) == 'R')
                 facingDirection += 5; // Rotate clockwise ( 1 + 4)
             else
@@ -99,9 +63,9 @@ public class Task1_Part2_Solution {
                     break;
             }
         }
-        int[] firstVisitedTwice = getFirstCoordVisitedTwice(visited); // Spec says that we have already visited all nodes, so do this check after visiting all
-        assert firstVisitedTwice != null; // Null check can never be null if correct input though
-        return (abs(firstVisitedTwice[0]) + abs(firstVisitedTwice[1])); // Add total of X + Y (positive) to get distance traveled, since city grid system is 1, 1 movements all we need to do is total X Y
+        int[] firstVisitedTwice = getFirstCoordVisitedTwice(visited);
+        assert firstVisitedTwice != null;
+        return (abs(firstVisitedTwice[0]) + abs(firstVisitedTwice[1]));
     }
 
     /**
@@ -184,8 +148,8 @@ public class Task1_Part2_Solution {
      * @throws IOException Throw Exception to the top layer of logic
      */
     private static String[] parseDataFile(String path) throws IOException {
-        BufferedReader br = new BufferedReader(new FileReader(path)); // Simple bufferedReader to take in your data.
-        String data = br.readLine(); // Read the file and remove all whitespace.
+        BufferedReader br = new BufferedReader(new FileReader(path));
+        String data = br.readLine();
         String[] parsedData = data.split(", ");
         br.close();
         return parsedData;
